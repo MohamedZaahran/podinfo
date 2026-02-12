@@ -250,7 +250,10 @@ tolerations: []
 
 affinity: {}
 
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9898"
+  prometheus.io/path: "/metrics"
 
 # https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
 topologySpreadConstraints: []
