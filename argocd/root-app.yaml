@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/MohamedZaahran/podinfo.git
     targetRevision: master
-    path: argocd
+    path: argocd/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
