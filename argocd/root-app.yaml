@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: podinfo
+  name: root-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/MohamedZaahran/podinfo.git
     targetRevision: master
-    path: podinfo
+    path: argocd
   destination:
     server: https://kubernetes.default.svc
-    namespace: podinfo
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
