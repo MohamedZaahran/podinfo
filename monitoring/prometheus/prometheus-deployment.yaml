@@ -24,6 +24,9 @@ spec:
               mountPath: /etc/prometheus
             - name: prometheus-storage
               mountPath: /prometheus
+            - name: rules-volume
+              mountPath: /etc/prometheus/rules
+
       volumes:
         - name: config-volume
           configMap:
@@ -32,3 +35,6 @@ spec:
         - name: prometheus-storage
           persistentVolumeClaim:
             claimName: prometheus-pvc
+        - name: rules-volume
+          configMap:
+            name: prometheus-rules

@@ -7,3 +7,4 @@ resources:
   - prometheus-service.yaml
   - prometheus-rbac.yaml
   - prometheus-pvc.yaml
+  - prometheus-rules.yaml
