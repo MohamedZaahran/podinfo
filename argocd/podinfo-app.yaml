@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podinfo
+  namespace: argocd
+spec:
+  destination:
+    namespace: podinfo
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: podinfo/charts/podinfo
+    repoURL: https://github.com/MohamedZaahran/podinfo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
