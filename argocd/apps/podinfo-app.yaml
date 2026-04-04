@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/MohamedZaahran/podinfo.git
     targetRevision: master
-    path: podinfo
+    path: podinfo/charts/podinfo
   destination:
     server: https://kubernetes.default.svc
     namespace: podinfo
