@@ -6,7 +6,15 @@ metadata:
 data:
   alertmanager.yml: |
     route:
-      receiver: "default"
+      receiver: "gmail"
 
     receivers:
-      - name: "default"
+      - name: "gmail"
+        email_configs:
+          - to: "mohamedzaahran1@gmail.com"
+            from: "mohamedzaahran1@gmail.com"
+            smarthost: "smtp.gmail.com:587"
+            auth_username: "mohamedzaahran1@gmail.com"
+            auth_identity: "mohamedzaahran1@gmail.com"
+            auth_password: "fslwhxqntoiovqbp"
+            require_tls: true
