@@ -26,6 +26,8 @@ spec:
               mountPath: /prometheus
             - name: rules-volume
               mountPath: /etc/prometheus/rules
+      strategy:
+        type: Recreate
 
       volumes:
         - name: config-volume
