@@ -5,6 +5,8 @@ metadata:
   namespace: prometheus
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: prometheus-server
@@ -26,8 +28,6 @@ spec:
               mountPath: /prometheus
             - name: rules-volume
               mountPath: /etc/prometheus/rules
-      strategy:
-        type: Recreate
 
       volumes:
         - name: config-volume
