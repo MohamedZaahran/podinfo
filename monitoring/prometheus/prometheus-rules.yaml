@@ -8,11 +8,11 @@ data:
     groups:
       - name: pod-health
         rules:
-          - alert: KubernetesPodScrapeDown
-            expr: up{job="kubernetes-pods"} == 0
+          - alert: PodInfoScrapeDown
+            expr: up{job="kubernetes-pods", namespace="podinfo"} == 0
             for: 1m
             labels:
               severity: warning
             annotations:
-              summary: "Prometheus scrape target is down"
-              description: "Target {{ $labels.instance }} in job {{ $labels.job }} has been down for more than 1 minute."
+              summary: "Podinfo scrape target is down"
+              description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is down (instance {{ $labels.instance }}) for more than 1 minute."
