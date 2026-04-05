@@ -18,3 +18,5 @@ data:
             auth_identity: "mohamedzaahran1@gmail.com"
             auth_password: "fslwhxqntoiovqbp"
             require_tls: true
+            tls_config:
+              insecure_skip_verify: true
