@@ -251,7 +251,7 @@ tolerations: []
 affinity: {}
 
 podAnnotations:
-  prometheus.io/scrape: "true"
+  prometheus.io/scrape: "false"
   prometheus.io/port: "9898"
   prometheus.io/path: "/metrics"
 
