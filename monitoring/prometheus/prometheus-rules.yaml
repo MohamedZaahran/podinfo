@@ -17,7 +17,7 @@ data:
               summary: "Podinfo scrape target is down"
               description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is down (instance {{ $labels.instance }}) for more than 1 minute."
           - alert: PodInfoRestarting
-            expr: increase(kube_pod_contai ner_status_restarts_total{exported_namespace="podinfo", container="podinfo"}[5m]) > 0
+            expr: increase(kube_pod_container_status_restarts_total{exported_namespace="podinfo", container="podinfo"}[5m]) > 0
             labels:
               severity: warning
             annotations:
