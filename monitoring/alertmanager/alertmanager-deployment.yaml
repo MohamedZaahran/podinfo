@@ -21,6 +21,12 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/alertmanager
+          env:
+            - name: GMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alertmanager-gmail
+                  key: password
       volumes:
         - name: config-volume
           configMap:

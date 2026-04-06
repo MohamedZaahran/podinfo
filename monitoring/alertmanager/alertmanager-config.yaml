@@ -16,7 +16,7 @@ data:
             smarthost: "smtp.gmail.com:587"
             auth_username: "mohamedzaahran1@gmail.com"
             auth_identity: "mohamedzaahran1@gmail.com"
-            auth_password: "REDACTED"
+            auth_password: "${GMAIL_PASSWORD}"
             require_tls: true
             tls_config:
               insecure_skip_verify: true
