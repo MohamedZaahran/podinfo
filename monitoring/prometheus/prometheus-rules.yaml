@@ -16,6 +16,7 @@ data:
             annotations:
               summary: "Podinfo scrape target is down"
               description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is down (instance {{ $labels.instance }}) for more than 1 minute."
+          
           - alert: PodInfoRestarting
             expr: increase(kube_pod_container_status_restarts_total{exported_namespace="podinfo", container="podinfo"}[5m]) > 0
             labels:
@@ -23,6 +24,7 @@ data:
             annotations:
               summary: "Podinfo container is restarting"
               description: "Pod {{ $labels.exported_pod }} in namespace {{ $labels.exported_namespace }} restarted in the last 5 minutes."
+          
           - alert: PodInfoMissingTargets
             expr: absent(up{job="kubernetes-pods", namespace="podinfo"})
             for: 1m
@@ -31,3 +33,30 @@ data:
             annotations:
               summary: "Podinfo targets missing"
               description: "No podinfo targets are being scraped by Prometheus for more than 1 minute."
+
+          - alert: PrometheusDown
+            expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="prometheus-server"} < 1
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Prometheus is down"
+              description: "Prometheus deployment has no available replicas for more than 1 minute."
+
+          - alert: GrafanaDown
+            expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="grafana"} < 1
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Grafana is down"
+              description: "Grafana deployment has no available replicas for more than 1 minute."
+
+          - alert: AlertmanagerDown
+            expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="alertmanager"} < 1
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Alertmanager is down"
+              description: "Alertmanager deployment has no available replicas for more than 1 minute."
