@@ -44,28 +44,55 @@ data:
               description: "Prometheus deployment has no available replicas for more than 1 minute."
 
           - alert: GrafanaTargetDown
-            expr: up{job="grafana"} == 0
+            expr: up{job="kubernetes-pods", namespace="prometheus", pod=~"grafana-.*"} == 0
             for: 1m
             labels:
-              severity: warning
+              severity: critical
             annotations:
               summary: "Grafana target is down"
-              description: "Prometheus cannot scrape Grafana."
+              description: "Prometheus cannot scrape Grafana for more than 1 minute."
+
+          - alert: GrafanaMissingTargets
+            expr: absent(up{job="kubernetes-pods", namespace="prometheus", pod=~"grafana-.*"})
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Grafana targets missing"
+              description: "No Grafana targets are being scraped by Prometheus for more than 1 minute."
 
           - alert: AlertmanagerTargetDown
-            expr: up{job="alertmanager"} == 0
+            expr: up{job="kubernetes-pods", namespace="prometheus", pod=~"alertmanager-.*"} == 0
             for: 1m
             labels:
               severity: critical
             annotations:
               summary: "Alertmanager target is down"
-              description: "Prometheus cannot scrape Alertmanager metrics."
+              description: "Prometheus cannot scrape Alertmanager for more than 1 minute."
 
-          - alert: KubeStateMetricsDown
-            expr: up{job="kube-state-metrics"} == 0
+          - alert: AlertmanagerMissingTargets
+            expr: absent(up{job="kubernetes-pods", namespace="prometheus", pod=~"alertmanager-.*"})
             for: 1m
             labels:
               severity: critical
             annotations:
-              summary: "kube-state-metrics is down"
-              description: "Cluster state metrics are unavailable."
+              summary: "Alertmanager targets missing"
+              description: "No Alertmanager targets are being scraped by Prometheus for more than 1 minute."
+
+          - alert: KubeStateMetricsTargetDown
+            expr: up{job="kubernetes-pods", namespace="prometheus", pod=~"kube-state-metrics-.*"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "kube-state-metrics target is down"
+              description: "Prometheus cannot scrape kube-state-metrics for more than 1 minute."
+
+          - alert: KubeStateMetricsMissingTargets
+            expr: absent(up{job="kubernetes-pods", namespace="prometheus", pod=~"kube-state-metrics-.*"})
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "kube-state-metrics targets missing"
+              description: "No kube-state-metrics targets are being scraped by Prometheus for more than 1 minute."
