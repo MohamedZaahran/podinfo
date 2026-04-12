@@ -43,20 +43,29 @@ data:
               summary: "Prometheus is down"
               description: "Prometheus deployment has no available replicas for more than 1 minute."
 
-          - alert: GrafanaDown
-            expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="grafana"} < 1
+          - alert: GrafanaTargetDown
+            expr: up{job="grafana"} == 0
             for: 1m
             labels:
-              severity: critical
+              severity: warning
             annotations:
-              summary: "Grafana is down"
-              description: "Grafana deployment has no available replicas for more than 1 minute."
+              summary: "Grafana target is down"
+              description: "Prometheus cannot scrape Grafana."
 
-          - alert: AlertmanagerDown
-            expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="alertmanager"} < 1
+          - alert: AlertmanagerTargetDown
+            expr: up{job="alertmanager"} == 0
             for: 1m
             labels:
               severity: critical
             annotations:
-              summary: "Alertmanager is down"
-              description: "Alertmanager deployment has no available replicas for more than 1 minute."
+              summary: "Alertmanager target is down"
+              description: "Prometheus cannot scrape Alertmanager metrics."
+
+          - alert: KubeStateMetricsDown
+            expr: up{job="kube-state-metrics"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "kube-state-metrics is down"
+              description: "Cluster state metrics are unavailable."
