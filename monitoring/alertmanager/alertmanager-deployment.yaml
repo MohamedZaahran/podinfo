@@ -12,6 +12,10 @@ spec:
     metadata:
       labels:
         app: alertmanager
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9093"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: alertmanager
