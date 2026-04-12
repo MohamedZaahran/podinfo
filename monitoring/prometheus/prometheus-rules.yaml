@@ -34,6 +34,24 @@ data:
               summary: "Podinfo targets missing"
               description: "No podinfo targets are being scraped by Prometheus for more than 1 minute."
 
+          - alert: PodinfoReplicasMismatch
+            expr: kube_deployment_spec_replicas{exported_namespace="podinfo", deployment="podinfo"} != kube_deployment_status_replicas_available{exported_namespace="podinfo", deployment="podinfo"}
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Podinfo replicas mismatch"
+              description: "Podinfo desired replicas do not match available replicas for more than 2 minutes."
+
+          - alert: PodinfoUnavailableReplicas
+            expr: kube_deployment_status_replicas_unavailable{exported_namespace="podinfo", deployment="podinfo"} > 0
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Podinfo has unavailable replicas"
+              description: "Podinfo has unavailable replicas for more than 2 minutes."
+
           - alert: PrometheusDown
             expr: kube_deployment_status_replicas_available{exported_namespace="prometheus", deployment="prometheus-server"} < 1
             for: 1m
