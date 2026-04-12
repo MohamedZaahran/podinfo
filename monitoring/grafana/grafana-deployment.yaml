@@ -12,6 +12,10 @@ spec:
     metadata:
       labels:
         app: grafana
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: grafana
@@ -30,6 +34,8 @@ spec:
           env:
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: "admin123" # Hardcoded for lab environments only!
+            - name: GF_METRICS_ENABLED
+              value: "true"
       
       volumes:
         - name: grafana-storage # For persistent storage even if pod dies
