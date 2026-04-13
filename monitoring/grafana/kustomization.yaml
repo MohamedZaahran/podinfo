@@ -7,4 +7,11 @@ resources:
   - grafana-pvc.yaml
   - grafana-datasource-cm.yaml
   - grafana-provider-cm.yaml
-  - podinfo-dashboard-cm.yaml
+
+configMapGenerator:
+  - name: podinfo-dashboard-cm
+    namespace: prometheus
+    files:
+      - podinfo-dashboard.json
+generatorOptions:
+  disableNameSuffixHash: true
